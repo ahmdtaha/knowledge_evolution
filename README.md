@@ -16,7 +16,7 @@ PyTorch implementation of the Knowledge Evolution training approach and Split-Ne
 ## Usage example
 
 
-The following table shows knowledge evolution in both the dense (even rows) and slim (old rows) using Flower102 on ResNet18.
+The following table shows knowledge evolution in both the dense (even rows) and slim (odd rows) using Flower102 on ResNet18.
 As the number of generation increases, both the dense and slim networks' performance increases.
 
 ![Our implementation performance](./imgs/dense_slim.jpg)  
