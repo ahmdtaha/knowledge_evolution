@@ -296,18 +296,24 @@ def Split_ResNet50(cfg,progress=True):
     return model
 
 
-def ResNet101(cfg,pretrained=False):
-    return ResNet(cfg,get_builder(cfg), Bottleneck, [3, 4, 23, 3])
+def Split_ResNet101(cfg,progress=True):
+    model = ResNet(cfg,get_builder(cfg), Bottleneck, [3, 4, 23, 3])
+    if cfg.pretrained == 'imagenet':
+        arch = 'resnet101'
+        state_dict = load_state_dict_from_url(model_urls[arch],
+                                              progress=progress)
+        load_state_dict(model,state_dict,strict=False)
+    return model
 
 
-def WideResNet50_2(cfg,pretrained=False):
-    return ResNet(cfg,
-        get_builder(cfg), Bottleneck, [3, 4, 6, 3], base_width=64 * 2
-    )
-
-
-def WideResNet101_2(cfg,pretrained=False):
-    return ResNet(cfg,
-        get_builder(cfg), Bottleneck, [3, 4, 23, 3], base_width=64 * 2
-    )
+# def WideResNet50_2(cfg,pretrained=False):
+#     return ResNet(cfg,
+#         get_builder(cfg), Bottleneck, [3, 4, 6, 3], base_width=64 * 2
+#     )
+#
+#
+# def WideResNet101_2(cfg,pretrained=False):
+#     return ResNet(cfg,
+#         get_builder(cfg), Bottleneck, [3, 4, 23, 3], base_width=64 * 2
+#     )
 

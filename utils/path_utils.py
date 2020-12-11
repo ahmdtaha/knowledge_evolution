@@ -118,9 +118,7 @@ def get_directories(args,generation):
         run_base_dir = pathlib.Path(
             f"{args.log_dir}/{args.name}/gen_{generation}/split_rate={args.split_rate}"
         )
-    if args.width_mult != 1.0:
-        run_base_dir = run_base_dir / "width_mult={}".format(str(args.width_mult))
-
+    
     def _run_dir_exists(run_base_dir):
         log_base_dir = run_base_dir / "logs"
         ckpt_base_dir = run_base_dir / "checkpoints"

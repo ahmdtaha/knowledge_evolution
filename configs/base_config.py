@@ -13,16 +13,22 @@ args = None
 
 class Config:
     def __init__(self):
-        parser = argparse.ArgumentParser(description="PyTorch ImageNet Training")
+        parser = argparse.ArgumentParser(description="Knowledge Evolution Training Approach")
 
         # General Config
         parser.add_argument(
             "--data", help="path to dataset base directory", default="/mnt/disk1/datasets"
         )
+
         parser.add_argument("--optimizer", help="Which optimizer to use", default="sgd")
-        parser.add_argument("--set", help="name of dataset", type=str, default="ImageNet")
+        parser.add_argument("--set", help="only Flower102Pytorch is currently supported", type=str, default="Flower102Pytorch",
+                            choices=['Flower102Pytorch'])
+
         parser.add_argument(
-            "-a", "--arch", metavar="ARCH", default="ResNet18", help="model architecture"
+            "-a", "--arch", metavar="ARCH", default="Split_ResNet18", help="model architecture",
+            choices=['Split_ResNet18','Split_ResNet34','Split_ResNet50','Split_ResNet101',
+                     'Split_googlenet',
+                     ]
         )
         parser.add_argument(
             "--config_file", help="Config file to use (see configs dir)", default=None
@@ -32,8 +38,8 @@ class Config:
         )
 
         parser.add_argument(
-            '--evolve_mode', default='ke', choices=['ke','zero','rand','ke_rot'],
-            help='Name of the model to use.')
+            '--evolve_mode', default='rand', choices=['rand'],
+            help='How to initialize the reset-hypothesis.')
 
         parser.add_argument(
             "-t",
@@ -128,7 +134,6 @@ class Config:
         parser.add_argument('--warm', default=1, type=int,
                             help='Warmup training epochs'
                             )
-        # parser.add_argument("--num-classes", default=10, type=int)
         parser.add_argument(
             "--resume",
             default="",
@@ -136,13 +141,7 @@ class Config:
             metavar="PATH",
             help="path to latest checkpoint (default: none)",
         )
-        # parser.add_argument(
-        #     "-e",
-        #     "--evaluate",
-        #     dest="evaluate",
-        #     action="store_true",
-        #     help="evaluate model on validation set",
-        # )
+
         parser.add_argument(
             "--pretrained",
             dest="pretrained",
@@ -153,19 +152,7 @@ class Config:
         parser.add_argument(
             "--seed", default=None, type=int, help="seed for initializing training. "
         )
-        # parser.add_argument(
-        #     "--multigpu",
-        #     default=None,
-        #     type=lambda x: [int(a) for a in x.split(",")],
-        #     help="Which GPUs to use for multigpu training",
-        # )
 
-        # parser.add_argument(
-        #     "--rank",
-        #     default=0,
-        #     type=int,
-        #     help="Pytorch DDP rank",
-        # )
 
         parser.add_argument(
             "--world_size",
@@ -210,30 +197,21 @@ class Config:
         parser.add_argument(
             "--split_rate",
             default=1.0,
-            help="Amount of pruning to do during sparse training",
+            help="What is the split-rate for the split-network weights?",
             type=float,
         )
         parser.add_argument(
             "--bias_split_rate",
             default=1.0,
-            help="Amount of pruning to do during sparse training",
+            help="What is the bias split-rate for the split-network weights?",
             type=float,
         )
 
         parser.add_argument(
             "--slimming_factor",
             default=1.0,
-            help="Amount of pruning to do during sparse training",
-            type=float,
-        )
-
-        parser.add_argument(
-            "--low-data", default=1, help="Amount of data to use", type=float
-        )
-        parser.add_argument(
-            "--width-mult",
-            default=1.0,
-            help="How much to vary the width of the network.",
+            help="This variable is used to extract a slim network from a dense network. "
+                 "It use initialized using the split_rate of the trained dense network.",
             type=float,
         )
         parser.add_argument(
@@ -241,16 +219,6 @@ class Config:
             default="kels",
             choices=['kels','wels'],
             help="how to split the binary mask",
-        )
-        parser.add_argument(
-            "--random-subnet",
-            action="store_true",
-            help="Whether or not to use a random subnet when fine tuning for lottery experiments",
-        )
-        parser.add_argument(
-            "--one-batch",
-            action="store_true",
-            help="One batch train set for debugging purposes (test overfitting)",
         )
         parser.add_argument(
             "--conv_type", type=str, default=None, help="What kind of sparsity to use"
@@ -306,8 +274,6 @@ class Config:
         )
 
 
-        parser.add_argument("--svmax_lm", default=0.0, type=float, help="SVMax coefficient lambda")
-
         self.parser = parser
 
     def parse(self,args):
@@ -326,9 +292,6 @@ class Config:
         elif self.cfg.set == 'ImageNet':
             self.cfg.num_cls = 1000
             self.cfg.eval_tst = False
-        elif self.cfg.set == 'FCAM':
-            self.cfg.num_cls = 200
-            self.cfg.eval_tst = False
         elif self.cfg.set == 'FCAMD':
             self.cfg.num_cls = 250
             self.cfg.eval_tst = False
@@ -338,13 +301,10 @@ class Config:
         elif self.cfg.set == 'CARS_RET':
             self.cfg.num_cls = self.cfg.emb_dim
             self.cfg.eval_tst = False
-        elif self.cfg.set == 'HAM':
-            self.cfg.num_cls = 7
-            self.cfg.eval_tst = False
         elif self.cfg.set == 'Dog120':
             self.cfg.num_cls = 120
             self.cfg.eval_tst = False
-        elif self.cfg.set in ['MIT67','MINI_MIT67']:
+        elif self.cfg.set in ['MIT67']:
             self.cfg.num_cls = 67
             self.cfg.eval_tst = False
         elif self.cfg.set == 'Aircraft100':
