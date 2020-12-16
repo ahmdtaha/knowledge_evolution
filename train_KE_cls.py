@@ -249,44 +249,9 @@ def main(arg_num_threads=16):
             argv.extend(['--reset_hypothesis'])
 
 
-
         cfg = Config().parse(argv)
 
         assert cfg.epochs % 10 == 0 or 'debug' in cfg.name, 'Epoch should be divisible by 10'
-
-        original_name = cfg.name
-        original_split_rate = cfg.split_rate
-        original_bias_split_rate = cfg.bias_split_rate
-
-        username = getpass.getuser()
-        if username == 'ahmdtaha':  ## Make sure I am using first GPU on vulcan
-            cfg.gpu = 0
-            cfg.num_threads = arg_num_threads
-            cfg.logger.info('Using {} CPUs on Vulcan'.format(cfg.num_threads))
-            os.system("mkdir -p /scratch0/ahmdtaha/datasets")
-            if arg_dataset == 'CUB200':
-                os.system(
-                    "/cfarhomes/ahmdtaha/code/msrsync/out -P -p16 /vulcanscratch/ahmdtaha/datasets/CUB_200_2011 /scratch0/ahmdtaha/datasets/")
-            elif arg_dataset == 'Flower102':
-                os.system(
-                    "/cfarhomes/ahmdtaha/code/msrsync/out -P -p16 /vulcanscratch/ahmdtaha/datasets/flower102 /scratch0/ahmdtaha/datasets/")
-            elif arg_dataset in ['MIT67','MINI_MIT67']:
-                os.system(
-                    "/cfarhomes/ahmdtaha/code/msrsync/out -P -p16 /vulcanscratch/ahmdtaha/datasets/mit67 /scratch0/ahmdtaha/datasets/")
-            elif arg_dataset == 'Aircraft100':
-                os.system(
-                    "/cfarhomes/ahmdtaha/code/msrsync/out -P -p16 /vulcanscratch/ahmdtaha/datasets/aircrafts /scratch0/ahmdtaha/datasets/")
-            elif arg_dataset == 'Dog120':
-                os.system(
-                    "/cfarhomes/ahmdtaha/code/msrsync/out -P -p16 /vulcanscratch/ahmdtaha/datasets/stanford_dogs /scratch0/ahmdtaha/datasets/")
-            else:
-                raise NotImplemented('Invalid arg_dataset {}'.format(arg_dataset))
-        elif username == 'ataha':
-            if 'debug' in cfg.name:
-                cfg.num_threads = 0
-            else:
-                cfg.num_threads = 16
-
 
 
         ckpt_queue = []
@@ -314,10 +279,6 @@ def main(arg_num_threads=16):
             if len(ckpt_queue) > 4:
                 oldest_ckpt = ckpt_queue.pop(0)
                 clean_dir(oldest_ckpt, cfg.epochs)
-
-                # oldest_ckpt = ckpt_queue.pop(0)
-                # clean_dir(oldest_ckpt, cfg.epochs)
-
 
 
 

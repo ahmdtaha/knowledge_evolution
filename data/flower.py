@@ -27,11 +27,7 @@ class Flower102Pytorch:
 
         self.num_classes = len(self.lbl2idx_dict.keys())
 
-        # trn_imgs,trn_lbls = self.imgs_and_lbls(trn_data_df)
-        #
-        # self.train_loader = torch.utils.data.DataLoader(CustomDataset(trn_imgs, trn_lbls, is_training=True),
-        #                             batch_size=cfg.batch_size, shuffle=True,
-        #                             num_workers=cfg.num_threads)
+
 
         self.train_loader = self.create_loader(csv_file, cfg,is_training=True)
 
@@ -40,15 +36,7 @@ class Flower102Pytorch:
 
         csv_file = '/lists/val_all_sub_list.csv'
         self.val_loader = self.create_loader(csv_file,cfg,is_training=False)
-        # if osp.exists(db_path + csv_file):
-        #     val_data_df = pd.read_csv(db_path + csv_file)
-        #     val_imgs, val_lbls = self.imgs_and_lbls(val_data_df)
-        #
-        #     self.val_loader = torch.utils.data.DataLoader(CustomDataset(val_imgs, val_lbls, is_training=False),
-        #                                                   batch_size=cfg.batch_size, shuffle=False,
-        #                                                   num_workers=cfg.num_threads)
-        # else:
-        #     self.val_loader = self.tst_loader
+
 
     def create_loader(self,imgs_lst,cfg,is_training):
         db_path = path_utils.get_datasets_dir(cfg.set)
