@@ -108,28 +108,11 @@ class Config:
         parser.add_argument('--bn_freeze', default=1, type=int,
                             help='Batch normalization parameter freeze'
                             )
-        parser.add_argument('--emb_dim', default=128, type=int,
-                            help='Size of embedding that is appended to backbone model.'
-                            )
         parser.add_argument('--samples_per_class', default=1, type=int,
                             help='Number of samples per class inside a mini-batch.'
                             )
-        parser.add_argument(
-            "--margin",
-            default=0.1, type=float,
-            help='Margin parameter setting',
-        )
         parser.add_argument('--alpha', default=32, type=float,
                             help='Scaling Parameter setting'
-                            )
-        parser.add_argument(
-            "--ml_loss",
-            default="Proxy_Anchor",
-            type=str,
-            help="Which metric learning loss?",
-        )
-        parser.add_argument('--l2-norm', default=1, type=int,
-                            help='L2 normlization'
                             )
         parser.add_argument('--warm', default=1, type=int,
                             help='Warmup training epochs'

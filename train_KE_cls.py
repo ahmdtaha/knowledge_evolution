@@ -161,7 +161,7 @@ def main(arg_num_threads=16):
     print('Starting with {} threads'.format(arg_num_threads))
     # arg_dataset = 'CUB200'  # Flower102, CUB200,HAM,Dog120,MIT67,Aircraft100,MINI_MIT67,FCAM
     for arg_dataset in ['Flower102Pytorch']:
-        arg_epochs = str(200)
+        arg_epochs = str(20)
         arg_evolve_mode = 'rand'
         arg_reset_hypothesis = False
         arg_pretrained = False #imagnet or False
@@ -170,7 +170,7 @@ def main(arg_num_threads=16):
         arg_arch = 'Split_ResNet18'  # Split_ResNet18,Split_ResNet34,Split_ResNet50,split_googlenet,split_densenet169,split_vgg11_bn,split_densenet121
         arg_split_top = '0.5'
         arg_bias_split_top = arg_split_top
-        arg_num_generations = '10'
+        arg_num_generations = '3'
         arg_split_mode = 'kels'
 
         exp_name_suffix = 'single_gpu_cls_study_fix_wels_wo_cache'
