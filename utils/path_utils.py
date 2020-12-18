@@ -9,30 +9,14 @@ username = getpass.getuser()
 def get_checkpoint_dir():
 
     project_name = osp.basename(osp.abspath('./'))
-    if username == 'ahmdtaha':
-        ckpt_dir = '/vulcanscratch/ahmdtaha/checkpoints'
-    elif username == 'ataha':
-        ckpt_dir = '/mnt/data/checkpoints'
-    elif username == 'ahmedtaha':
-        ckpt_dir = '/Users/ahmedtaha/Documents/checkpoints'
-    else:
-        raise NotImplementedError('Invalid username {}'.format(username))
-
+    ckpt_dir = '/mnt/data/checkpoints'
     assert osp.exists(ckpt_dir),('{} does not exists'.format(ckpt_dir))
 
     ckpt_dir = f'{ckpt_dir}/{project_name}'
     return ckpt_dir
 
 def get_pretrained_ckpt(model_name):
-
-    if username == 'ahmdtaha':
-        pretrained_dir = '/vulcanscratch/ahmdtaha/pretrained'
-    elif username == 'ataha':
-        pretrained_dir = '/mnt/data/pretrained'
-    elif username == 'ahmedtaha':
-        pretrained_dir = '/Users/ahmedtaha/Documents/pretrained'
-    else:
-        raise NotImplementedError('Invalid username {}'.format(username))
+    pretrained_dir = '/mnt/data/pretrained'
 
     assert osp.exists(pretrained_dir),('{} does not exists'.format(pretrained_dir))
 
@@ -53,18 +37,10 @@ def get_pretrained_ckpt(model_name):
     return pretrained_ckpt
 
 def get_datasets_dir(dataset_name):
+    datasets_dir = '/mnt/data/datasets'
 
-    if username == 'ahmdtaha':
-        datasets_dir = '/scratch0/ahmdtaha/datasets'
-    elif username == 'ataha':
-        datasets_dir = '/mnt/data/datasets'
-    elif username == 'ahmedtaha':
-        datasets_dir = '/Users/ahmedtaha/Documents/datasets'
-    else:
-        raise NotImplementedError('Invalid username {}'.format(username))
 
     assert osp.exists(datasets_dir),('{} does not exists'.format(datasets_dir))
-    # print(dataset_name)
     if dataset_name == 'CUB200' or dataset_name == 'CUB200_RET':
         dataset_dir = 'CUB_200_2011'
     elif dataset_name == 'CARS_RET':
@@ -118,7 +94,7 @@ def get_directories(args,generation):
         run_base_dir = pathlib.Path(
             f"{args.log_dir}/{args.name}/gen_{generation}/split_rate={args.split_rate}"
         )
-    
+
     def _run_dir_exists(run_base_dir):
         log_base_dir = run_base_dir / "logs"
         ckpt_base_dir = run_base_dir / "checkpoints"

@@ -161,7 +161,7 @@ def main(arg_num_threads=16):
     print('Starting with {} threads'.format(arg_num_threads))
     # arg_dataset = 'CUB200'  # Flower102, CUB200,HAM,Dog120,MIT67,Aircraft100,MINI_MIT67,FCAM
     for arg_dataset in ['Flower102Pytorch']:
-        arg_epochs = str(20)
+        arg_epochs = str(30)
         arg_evolve_mode = 'rand'
         arg_reset_hypothesis = False
         arg_pretrained = False #imagnet or False
