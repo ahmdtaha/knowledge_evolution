@@ -213,7 +213,7 @@ def main(arg_num_threads=16):
             '--batch_size', '32',
 
             '--conv_type', 'SplitConv',  # 'SubnetConv','StrictSubnetConv
-            '--bn_type', 'AffineBatchNorm',
+            '--bn_type', 'SplitBatchNorm',
             '--linear_type', 'SplitLinear',
             '--last_layer_dense',
 

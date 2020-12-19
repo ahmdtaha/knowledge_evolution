@@ -10,11 +10,11 @@ class NonAffineBatchNorm(nn.BatchNorm2d):
     def __init__(self, dim,**kwargs):
         super(NonAffineBatchNorm, self).__init__(dim, affine=False,**kwargs)
 
-class AffineBatchNorm(nn.BatchNorm2d):
+class SplitBatchNorm(nn.BatchNorm2d):
     def __init__(self, dim,**kwargs):
         self.in_channels_order = kwargs.pop('in_channels_order', None)
         split_rate = kwargs.pop('split_rate', None)
-        super(AffineBatchNorm, self).__init__(dim, affine=True,**kwargs)
+        super(SplitBatchNorm, self).__init__(dim, affine=True, **kwargs)
 
         if self.in_channels_order is not None:
             assert split_rate is not None, 'Should not be none if in_channels_order is not None'

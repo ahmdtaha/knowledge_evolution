@@ -218,7 +218,8 @@ class Config:
         parser.add_argument(
             "--nonlinearity", default="relu", help="Nonlinearity used by initialization"
         )
-        parser.add_argument("--bn_type", default=None, help="BatchNorm type")
+        parser.add_argument("--bn_type", default=None, help="BatchNorm type",
+                            choices=['NormalBatchNorm','NonAffineBatchNorm','SplitBatchNorm'])
         parser.add_argument(
             "--init", default="kaiming_normal", help="Weight initialization modifications"
         )

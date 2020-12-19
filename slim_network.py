@@ -69,7 +69,7 @@ def extract_slim(split_model,model):
                         dst_m.weight.data = src_m.weight[:d_out,src_m.mask[0,:] == 1]
                         dst_m.bias.data = src_m.bias.data[:d_out]
 
-            elif src_m.__class__ == bn_type.AffineBatchNorm:
+            elif src_m.__class__ == bn_type.SplitBatchNorm:
                 c_out = src_m.weight.size()[0]
                 d_out = dst_m.weight.size()[0]
                 if src_m.in_channels_order is None:
@@ -145,12 +145,12 @@ def main():
         '--batch_size', '32',
 
         # '--conv_type', 'SubnetCoarseConv',  # 'SubnetConv','StrictSubnetConv
-        # '--bn_type', 'AffineBatchNorm',
+        # '--bn_type', 'SplitBatchNorm',
         # '--linear_type', 'SubnetLinear',
         # '--last_layer_dense',
 
         '--conv_type', 'SplitConv',  # 'SubnetConv','StrictSubnetConv
-        '--bn_type', 'AffineBatchNorm',
+        '--bn_type', 'SplitBatchNorm',
         '--linear_type', 'SplitLinear',
         '--last_layer_dense',
 
@@ -253,7 +253,7 @@ def main():
                         raise NotImplemented('Invalid print_mode {}'.format(print_mode))
                     print()
                     # print(src_n, src_m.weight.shape, dst_m.weight.shape)
-                elif src_m.__class__ == bn_type.AffineBatchNorm:
+                elif src_m.__class__ == bn_type.SplitBatchNorm:
                     if print_mode == 0:
                         print(src_n,end='')
                     elif print_mode == 1:

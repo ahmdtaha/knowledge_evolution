@@ -2,7 +2,7 @@
 PyTorch implementation of the Knowledge Evolution training approach and Split-Nets
 
 ### TL;DR
-
+We subclass neural layers and define the mask inside the subclass. When creating a new network, we simply use our SplitConv and SplitLinear instead of the standard nn.Conv2d and nn.Linear.
 
 ## Requirements
 
@@ -38,3 +38,4 @@ I want to give credit to [Vivek Ramanujan and Mitchell Wortsman's repos](https:/
 ## Release History
 * 1.0.0
     * First code commit on 10 Dec 2020
+    * Submit/Test Split_googlenet code commit on 19 Dec 2020
