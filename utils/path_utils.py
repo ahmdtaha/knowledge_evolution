@@ -1,44 +1,23 @@
 import os
-import getpass
 import pathlib
+import constants
 import os.path as osp
 from datetime import datetime
 
-username = getpass.getuser()
 
 def get_checkpoint_dir():
 
     project_name = osp.basename(osp.abspath('./'))
-    ckpt_dir = '/mnt/data/checkpoints'
+    ckpt_dir = constants.checkpoints_dir
     assert osp.exists(ckpt_dir),('{} does not exists'.format(ckpt_dir))
 
     ckpt_dir = f'{ckpt_dir}/{project_name}'
     return ckpt_dir
 
-def get_pretrained_ckpt(model_name):
-    pretrained_dir = '/mnt/data/pretrained'
 
-    assert osp.exists(pretrained_dir),('{} does not exists'.format(pretrained_dir))
-
-    if model_name == 'vgg_tensorpack':
-        ckpt_path = 'tensorpack/vgg16.npz'
-    elif model_name == 'resnet_v1_50':
-        ckpt_path = 'resnet_v1_50/resnet_v1_50.ckpt'
-    elif model_name == 'resnet_v1_101':
-        ckpt_path = 'resnet_v1_101/resnet_v1_101.ckpt'
-    elif model_name == 'inception_v1':
-        ckpt_path = 'inception_v1/inception_v1.ckpt'
-    elif model_name == 'densenet169':
-        ckpt_path = 'tf-densenet169/tf-densenet169.ckpt'
-    else:
-        raise NotImplementedError('Invalid pretrained model name {}'.format(model_name))
-
-    pretrained_ckpt = '{}/{}'.format(pretrained_dir,ckpt_path)
-    return pretrained_ckpt
 
 def get_datasets_dir(dataset_name):
-    datasets_dir = '/mnt/data/datasets'
-
+    datasets_dir = constants.datasets_dir
 
     assert osp.exists(datasets_dir),('{} does not exists'.format(datasets_dir))
     if dataset_name == 'CUB200' or dataset_name == 'CUB200_RET':
@@ -66,10 +45,7 @@ def get_datasets_dir(dataset_name):
     elif dataset_name == 'Aircraft100':
         dataset_dir = 'aircrafts'
     elif dataset_name == 'ImageNet':
-        if username == 'ataha':
-            dataset_dir = 'imagenet/ILSVRC/Data/CLS-LOC'
-        else:
-            dataset_dir = 'imagenet'
+        dataset_dir = 'imagenet/ILSVRC/Data/CLS-LOC'
     else:
         raise NotImplementedError('Invalid dataset name {}'.format(dataset_name))
 
@@ -122,5 +98,4 @@ def get_directories(args,generation):
 
 if __name__ == '__main__':
     print(get_checkpoint_dir('test_exp'))
-    print(get_pretrained_ckpt('vgg_tensorpack'))
     print(get_datasets_dir('cub'))
