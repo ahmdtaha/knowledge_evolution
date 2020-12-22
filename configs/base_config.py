@@ -142,7 +142,7 @@ class Config:
             "--world_size",
             default=1,
             type=int,
-            help="Pytorch DDP rank",
+            help="Pytorch DDP world size",
         )
 
 
@@ -195,7 +195,7 @@ class Config:
             "--slimming_factor",
             default=1.0,
             help="This variable is used to extract a slim network from a dense network. "
-                 "It use initialized using the split_rate of the trained dense network.",
+                 "It is initialized using the split_rate of the trained dense network.",
             type=float,
         )
         parser.add_argument(
@@ -209,11 +209,6 @@ class Config:
         )
         parser.add_argument(
             "--linear_type", type=str, default=None, help="What kind of sparsity to use"
-        )
-        parser.add_argument(
-            "--freeze_weights",
-            action="store_true",
-            help="Whether or not to train only subnet (this freezes weights)",
         )
         parser.add_argument("--mode", default="fan_in", help="Weight initialization mode")
         parser.add_argument(

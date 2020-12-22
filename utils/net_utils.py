@@ -34,9 +34,6 @@ def get_model(args):
             f"=> Rough estimate model params {sum(int(p.numel() * (1 - args.split_rate)) for n, p in model.named_parameters() if not n.endswith('mask'))}"
         )
 
-    # freezing the weights if we are only doing subnet training
-    # if args.freeze_weights:
-    #     freeze_model_weights(model)
 
     return model
 
