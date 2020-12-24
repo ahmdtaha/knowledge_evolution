@@ -164,7 +164,6 @@ def main(arg_num_threads=16):
         arg_epochs = str(30)
         arg_evolve_mode = 'rand'
         arg_reset_hypothesis = False
-        arg_pretrained = False #imagnet or False
         arg_enable_cs_kd = False
         arg_enable_label_smoothing = True
         arg_arch = 'Split_ResNet18'  # Split_ResNet18,Split_ResNet34,Split_ResNet50,split_googlenet,split_densenet169,split_vgg11_bn,split_densenet121
@@ -175,9 +174,9 @@ def main(arg_num_threads=16):
 
         exp_name_suffix = 'single_gpu_cls_study_fix_wels_wo_cache'
         # exp_name_suffix = 'redo_debug'
-        arg_exp_name = 'SPLT_CLS_{}_{}_cskd{}_smth{}_imagenet{}_k{}_G{}_e{}_ev{}_hReset{}_sm{}_{}/'.format(arg_dataset, arg_arch,
+        arg_exp_name = 'SPLT_CLS_{}_{}_cskd{}_smth{}_k{}_G{}_e{}_ev{}_hReset{}_sm{}_{}/'.format(arg_dataset, arg_arch,
                                                                                            arg_enable_cs_kd,arg_enable_label_smoothing,
-                                                                                           arg_pretrained,arg_split_top,arg_num_generations,
+                                                                                           arg_split_top,arg_num_generations,
                                                                                            arg_epochs,arg_evolve_mode,arg_reset_hypothesis,arg_split_mode,exp_name_suffix)
 
         if arg_arch in ['split_alexnet','split_vgg11','split_vgg11_bn']:
@@ -232,18 +231,7 @@ def main(arg_num_threads=16):
         if arg_enable_label_smoothing:
             argv.extend(['--label_smoothing', '0.1'])
 
-        if arg_pretrained:
-            argv.extend(['--pretrained', 'imagenet',
-                         '--num_generations', '1',
-                         '--lr', '0.00256'])
-        else:
-            if arg_arch in ['split_alexnet','split_vgg11','split_vgg11_bn']:
-                argv.extend(['--lr', '0.0256'])
-            else:
-                argv.extend(['--lr', '0.256'])
-
-        # if arg_reset_scores:
-        #     argv.extend(['--reset_scores'])
+        argv.extend(['--lr', '0.256'])
 
         if arg_reset_hypothesis:
             argv.extend(['--reset_hypothesis'])
@@ -251,8 +239,8 @@ def main(arg_num_threads=16):
 
         cfg = Config().parse(argv)
 
-        assert cfg.epochs % 10 == 0 or 'debug' in cfg.name, 'Epoch should be divisible by 10'
-
+        # assert cfg.epochs % 10 == 0 or 'debug' in cfg.name, 'Epoch should be divisible by 10'
+        assert cfg.cs_kd == False , 'CS-KD requires a different data loader, not available in this repos'
 
         ckpt_queue = []
 
