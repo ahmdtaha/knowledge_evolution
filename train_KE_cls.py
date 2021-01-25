@@ -255,7 +255,7 @@ def main(arg_num_threads=16):
 
             cfg.pretrained = task_ckpt / 'epoch_{}.state'.format(cfg.epochs - 1)
 
-            if arg_pretrained or cfg.num_generations == 1:
+            if cfg.num_generations == 1:
                 break
 
             eval_slim(cfg, gen)
