@@ -17,7 +17,7 @@ class Flower102Pytorch:
         db_path = path_utils.get_datasets_dir(cfg.set)
         self.img_path = db_path + '/jpg/'
 
-        csv_file = '/lists/train_all_sub_list.csv'
+        csv_file = '/lists/trn.csv'
         trn_data_df = pd.read_csv(db_path + csv_file)
 
         lbls = trn_data_df['label']
@@ -31,10 +31,10 @@ class Flower102Pytorch:
 
         self.train_loader = self.create_loader(csv_file, cfg,is_training=True)
 
-        csv_file = '/lists/test_all_sub_list.csv'
+        csv_file = '/lists/tst.csv'
         self.tst_loader = self.create_loader(csv_file,cfg,is_training=False)
 
-        csv_file = '/lists/val_all_sub_list.csv'
+        csv_file = '/lists/val.csv'
         self.val_loader = self.create_loader(csv_file,cfg,is_training=False)
 
 

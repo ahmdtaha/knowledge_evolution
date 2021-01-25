@@ -15,6 +15,7 @@ We subclass neural layers and define the mask inside the subclass. When creating
 
 ## Usage example
 
+The Flower102Pytorch loader (`data>flower.py`) works directly with this [Flower102 dataset](https://drive.google.com/file/d/1a0h-bPfh3EAnVXBg2Yr1UCPBcfisdEoe/view?usp=sharing). This is the original flower102, but with an extra `list` directory that contains csv files for trn, val and tst splits. Feel free to download the flower dataset from [oxford website](https://www.robots.ox.ac.uk/~vgg/data/flowers/102/), just update `data>flower.py` accordingly. 
 
 The following table shows knowledge evolution in both the dense (even rows) and slim (odd rows) using Flower102 on ResNet18.
 As the number of generation increases, both the dense and slim networks' performance increases.

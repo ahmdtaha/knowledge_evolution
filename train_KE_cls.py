@@ -53,21 +53,8 @@ def eval_slim(cfg, generation):
     # if cfg.reset_mask:
     #     net_utils.reset_mask(cfg, model)
     model = net_utils.move_model_to_gpu(cfg, model)
-    #
-    # cfg.trainer = 'supermask_cls'
-    # cfg.pretrained = None
-
-    # ckpt_path = KE_model.ke_cls_train(cfg, model,generation)
 
     save_filter_stats = (cfg.arch in ['split_alexnet','split_vgg11_bn'])
-    # if save_filter_stats:
-    #     for n, m in model.named_modules():
-    #         if hasattr(m, "weight") and m.weight is not None:
-    #             if hasattr(m, "scores"):
-    #                 score_mask = conv_type.GetSubnet.apply(m.clamped_scores, m.keep_rate).type(torch.bool)
-    #                 if m.__class__ == conv_type.SplitConv:
-    #                     filter_state = [''.join(map(str,((score_mask == True).type(torch.int).squeeze().tolist())))]
-    #                     os_utils.txt_write(osp.join(cfg.exp_dir,n.replace('.','_')+'.txt'),filter_state,mode='a+')
     if save_filter_stats:
         for n, m in model.named_modules():
             if hasattr(m, "weight") and m.weight is not None:
@@ -147,7 +134,6 @@ def clean_dir(ckpt_dir,num_epochs):
         return
     rm_path = ckpt_dir / 'model_best.pth'
     if rm_path.exists():
-        # print('deleting ', ckpt_dir)
         os.remove(rm_path)
 
     rm_path = ckpt_dir / 'epoch_{}.state'.format(num_epochs - 1)
@@ -161,7 +147,7 @@ def main(arg_num_threads=16):
     print('Starting with {} threads'.format(arg_num_threads))
     # arg_dataset = 'CUB200'  # Flower102, CUB200,HAM,Dog120,MIT67,Aircraft100,MINI_MIT67,FCAM
     for arg_dataset in ['Flower102Pytorch']:
-        arg_epochs = str(30)
+        arg_epochs = str(200)
         arg_evolve_mode = 'rand'
         arg_reset_hypothesis = False
         arg_enable_cs_kd = False
@@ -169,10 +155,10 @@ def main(arg_num_threads=16):
         arg_arch = 'Split_ResNet18'  # Split_ResNet18,Split_ResNet34,Split_ResNet50,split_googlenet,split_densenet169,split_vgg11_bn,split_densenet121
         arg_split_top = '0.5'
         arg_bias_split_top = arg_split_top
-        arg_num_generations = '3'
-        arg_split_mode = 'kels'
+        arg_num_generations = '10'
+        arg_split_mode = 'kels' # wels , kels
 
-        exp_name_suffix = 'single_gpu_cls_study_fix_wels_wo_cache'
+        exp_name_suffix = 'single_gpu_cls_study'
         # exp_name_suffix = 'redo_debug'
         arg_exp_name = 'SPLT_CLS_{}_{}_cskd{}_smth{}_k{}_G{}_e{}_ev{}_hReset{}_sm{}_{}/'.format(arg_dataset, arg_arch,
                                                                                            arg_enable_cs_kd,arg_enable_label_smoothing,
