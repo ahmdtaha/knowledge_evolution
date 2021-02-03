@@ -147,12 +147,10 @@ def main():
         # '--conv_type', 'SubnetCoarseConv',  # 'SubnetConv','StrictSubnetConv
         # '--bn_type', 'SplitBatchNorm',
         # '--linear_type', 'SubnetLinear',
-        # '--last_layer_dense',
 
         '--conv_type', 'SplitConv',  # 'SubnetConv','StrictSubnetConv
         '--bn_type', 'SplitBatchNorm',
         '--linear_type', 'SplitLinear',
-        '--last_layer_dense',
 
         '--keep_rate', arg_keep_top,
         '--bias_keep_rate', arg_bias_keep_top,

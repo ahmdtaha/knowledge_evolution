@@ -143,7 +143,6 @@ def main():
         '--conv_type', 'SplitConv',  # 'SubnetConv','StrictSubnetConv
         '--bn_type', 'SplitBatchNorm',
         '--linear_type', 'SplitLinear',
-        '--last_layer_dense',
 
         '--split_rate', arg_split_top,
         '--bias_split_rate', arg_bias_split_top,

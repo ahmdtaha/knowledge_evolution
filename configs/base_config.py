@@ -148,7 +148,7 @@ class Config:
 
         parser.add_argument(
             "--gpu",
-            default=None,
+            default='0',
             type=int,
             help="Which GPUs to use?",
         )
@@ -205,16 +205,16 @@ class Config:
             help="how to split the binary mask",
         )
         parser.add_argument(
-            "--conv_type", type=str, default=None, help="What kind of sparsity to use"
+            "--conv_type", type=str, default='SplitConv', help="SplitConv | DenseConv"
         )
         parser.add_argument(
-            "--linear_type", type=str, default=None, help="What kind of sparsity to use"
+            "--linear_type", type=str, default='SplitLinear', help="SplitLinear | DenseLinear"
         )
         parser.add_argument("--mode", default="fan_in", help="Weight initialization mode")
         parser.add_argument(
             "--nonlinearity", default="relu", help="Nonlinearity used by initialization"
         )
-        parser.add_argument("--bn_type", default=None, help="BatchNorm type",
+        parser.add_argument("--bn_type", default='SplitBatchNorm', help="BatchNorm type",
                             choices=['NormalBatchNorm','NonAffineBatchNorm','SplitBatchNorm'])
         parser.add_argument(
             "--init", default="kaiming_normal", help="Weight initialization modifications"
@@ -231,10 +231,10 @@ class Config:
         parser.add_argument("--reset_hypothesis", action="store_true", default=False, help="Reset hypothesis across generations")
 
         parser.add_argument(
-            "--first_layer_dense", action="store_true", help="First layer dense or sparse"
+            "--first_layer_dense", action="store_true", help="First layer dense or conv"
         )
         parser.add_argument(
-            "--last_layer_dense", action="store_true", help="Last layer dense or sparse"
+            "--last_layer_conv", action="store_true", help="Last layer dense or conv"
         )
         parser.add_argument(
             "--label_smoothing",

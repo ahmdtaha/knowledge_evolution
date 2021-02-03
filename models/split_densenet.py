@@ -221,10 +221,11 @@ class DenseNet(nn.Module):
 
         # Linear layer
         # self.classifier = nn.Linear(num_features, num_classes)
-        if cfg.last_layer_dense:
-            self.classifier = builder.linear(num_features, cfg.num_cls,last_layer=True,in_channels_order=block.out_channels_order)
+        if cfg.last_layer_conv:
+            self.classifier = builder.conv1x1(num_features, cfg.num_cls, in_channels_order=block.out_channels_order)
         else:
-            self.classifier = builder.conv1x1(num_features, cfg.num_cls,in_channels_order=block.out_channels_order)
+            self.classifier = builder.linear(num_features, cfg.num_cls, last_layer=True,
+                                             in_channels_order=block.out_channels_order)
 
         # Official init from torch repo.
         for m in self.modules():

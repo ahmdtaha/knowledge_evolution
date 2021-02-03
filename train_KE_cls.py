@@ -1,4 +1,5 @@
 import os
+import sys
 import data
 import torch
 import getpass
@@ -143,6 +144,35 @@ def clean_dir(ckpt_dir,num_epochs):
     rm_path = ckpt_dir / 'initial.state'
     if rm_path.exists():
         os.remove(rm_path)
+
+def start_KE(cfg):
+    # assert cfg.epochs % 10 == 0 or 'debug' in cfg.name, 'Epoch should be divisible by 10'
+    assert cfg.cs_kd == False, 'CS-KD requires a different data loader, not available in this repos'
+
+    ckpt_queue = []
+
+    for gen in range(cfg.num_generations):
+        cfg.start_epoch = 0
+
+        # cfg.name = original_name + 'task'
+        task_ckpt = train_dense(cfg, gen)
+        ckpt_queue.append(task_ckpt)
+
+        # cfg.name = original_name + 'mask'
+
+        cfg.pretrained = task_ckpt / 'epoch_{}.state'.format(cfg.epochs - 1)
+
+        if cfg.num_generations == 1:
+            break
+
+        eval_slim(cfg, gen)
+
+        cfg.pretrained = task_ckpt / 'epoch_{}.state'.format(cfg.epochs - 1)
+
+        if len(ckpt_queue) > 4:
+            oldest_ckpt = ckpt_queue.pop(0)
+            clean_dir(oldest_ckpt, cfg.epochs)
+
 def main(arg_num_threads=16):
     print('Starting with {} threads'.format(arg_num_threads))
     # arg_dataset = 'CUB200'  # Flower102, CUB200,HAM,Dog120,MIT67,Aircraft100,MINI_MIT67,FCAM
@@ -200,7 +230,6 @@ def main(arg_num_threads=16):
             '--conv_type', 'SplitConv',  # 'SubnetConv','StrictSubnetConv
             '--bn_type', 'SplitBatchNorm',
             '--linear_type', 'SplitLinear',
-            '--last_layer_dense',
 
             '--split_rate', arg_split_top,
             '--bias_split_rate', arg_bias_split_top,
@@ -225,36 +254,14 @@ def main(arg_num_threads=16):
 
         cfg = Config().parse(argv)
 
-        # assert cfg.epochs % 10 == 0 or 'debug' in cfg.name, 'Epoch should be divisible by 10'
-        assert cfg.cs_kd == False , 'CS-KD requires a different data loader, not available in this repos'
-
-        ckpt_queue = []
-
-        for gen in range(cfg.num_generations):
-            cfg.start_epoch = 0
-
-            # cfg.name = original_name + 'task'
-            task_ckpt = train_dense(cfg, gen)
-            ckpt_queue.append(task_ckpt)
-
-            # cfg.name = original_name + 'mask'
-
-            cfg.pretrained = task_ckpt / 'epoch_{}.state'.format(cfg.epochs - 1)
-
-            if cfg.num_generations == 1:
-                break
-
-            eval_slim(cfg, gen)
-
-
-            cfg.pretrained = task_ckpt / 'epoch_{}.state'.format(cfg.epochs - 1)
-
-
-            if len(ckpt_queue) > 4:
-                oldest_ckpt = ckpt_queue.pop(0)
-                clean_dir(oldest_ckpt, cfg.epochs)
+        start_KE(cfg)
 
 
 
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) == 1:
+        main()
+    else:
+        cfg = Config().parse(None)
+        # print(cfg.name)
+        start_KE(cfg)
