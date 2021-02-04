@@ -149,10 +149,7 @@ class ResNet(nn.Module):
 
         self.avgpool = nn.AdaptiveAvgPool2d(1)
 
-        if cfg.last_layer_conv:
-            self.fc = builder.conv1x1(math.ceil(512 * block.expansion * slimming_factor), cfg.num_cls, last_layer=True)
-        else:
-            self.fc = builder.linear(math.ceil(512 * block.expansion * slimming_factor), cfg.num_cls, last_layer=True)
+        self.fc = builder.linear(math.ceil(512 * block.expansion * slimming_factor), cfg.num_cls, last_layer=True)
 
 
     def _make_layer(self, builder, block, planes, blocks, stride=1,slimming_factor=1):

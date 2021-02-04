@@ -234,9 +234,6 @@ class Config:
             "--first_layer_dense", action="store_true", help="First layer dense or conv"
         )
         parser.add_argument(
-            "--last_layer_conv", action="store_true", help="Last layer dense or conv"
-        )
-        parser.add_argument(
             "--label_smoothing",
             type=float,
             help="Label smoothing to use, default 0.0",
