@@ -18,21 +18,6 @@ def get_model(args):
     args.logger.info("=> Creating model '{}'".format(args.arch))
     model = models.__dict__[args.arch](args)
 
-    # applying sparsity to the network
-    if (
-            args.conv_type != "DenseConv"
-            and args.conv_type != "SampleSubnetConv"
-            and args.conv_type != "ContinuousSparseConv"
-    ):
-        if args.split_rate < 0:
-            raise ValueError("Need to set a positive prune rate")
-
-        # set_model_split_rate(model,args.split_rate,args.bias_split_rate,args)
-        args.logger.info(
-            f"=> Rough estimate model params {sum(int(p.numel() * (1 - args.split_rate)) for n, p in model.named_parameters() if not n.endswith('mask'))}"
-        )
-
-
     return model
 
 

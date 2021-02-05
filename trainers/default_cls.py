@@ -9,7 +9,7 @@ from utils.logging import AverageMeter, ProgressMeter
 
 
 
-__all__ = ["train", "validate", "modifier"]
+__all__ = ["train", "validate"]
 
 
 
@@ -145,9 +145,6 @@ def validate(val_loader, model, criterion, args, writer, epoch):
     # print(top1.count)
     return top1.avg, top5.avg
 
-# def modifier(args, epoch, model):
-#     net_utils.set_model_keep_rate(model, args.keep_rate,args.bias_keep_rate,args)
-#     net_utils.unfreeze_model_weights(model,args)
-#     net_utils.freeze_model_scores(model,args)
+
 
 

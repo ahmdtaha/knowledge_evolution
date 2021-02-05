@@ -8,11 +8,11 @@ import layers.linear_type
 
 
 class Builder(object):
-    def __init__(self, conv_layer, bn_layer,linear_layer, first_layer=None,cfg=None):
+    def __init__(self, conv_layer, bn_layer,linear_layer,cfg=None):
         self.conv_layer = conv_layer
         self.bn_layer = bn_layer
         self.linear_layer = linear_layer
-        self.first_layer = first_layer or conv_layer
+        self.first_layer = conv_layer
         self.cfg = cfg
 
 
@@ -288,12 +288,7 @@ def get_builder(cfg):
     bn_layer = getattr(layers.bn_type, cfg.bn_type)
     linear_layer = getattr(layers.linear_type, cfg.linear_type)
 
-    if cfg.first_layer_type is not None:
-        first_layer = getattr(layers.conv_type, cfg.first_layer_type)
-        cfg.logger.info(f"==> First Layer Type: {cfg.first_layer_type}")
-    else:
-        first_layer = None
 
-    builder = Builder(conv_layer=conv_layer, bn_layer=bn_layer,linear_layer=linear_layer, first_layer=first_layer,cfg=cfg)
+    builder = Builder(conv_layer=conv_layer, bn_layer=bn_layer,linear_layer=linear_layer,cfg=cfg)
 
     return builder

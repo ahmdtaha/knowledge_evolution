@@ -236,13 +236,7 @@ class Config:
             help="Label smoothing to use, default 0.0",
             default=None,
         )
-        parser.add_argument(
-            "--early_stopping", action="store_true", default=False,
-            help="To use early_stopping correctly, a dataset needs a validation set"
-        )
-        parser.add_argument(
-            "--first-layer-type", type=str, default=None, help="Conv type of first layer"
-        )
+
         parser.add_argument(
             "--trainer", type=str, default="default", help="cs, ss, or standard training"
         )

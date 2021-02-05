@@ -154,40 +154,9 @@ def ke_cls_train(cfg, model,generation):
                 writer, prefix="diagnostics", global_step=epoch
             )
 
-            # if cfg.conv_type == "SampleSubnetConv":
-            #     count = 0
-            #     sum_pr = 0.0
-            #     for n, m in model.named_modules():
-            #         if isinstance(m, SampleSubnetConv):
-            #             # avg pr across 10 samples
-            #             pr = 0.0
-            #             for _ in range(10):
-            #                 pr += (
-            #                     (torch.rand_like(m.clamped_scores) >= m.clamped_scores)
-            #                         .float()
-            #                         .mean()
-            #                         .item()
-            #                 )
-            #             pr /= 10.0
-            #             writer.add_scalar("pr/{}".format(n), pr, epoch)
-            #             sum_pr += pr
-            #             count += 1
-            #
-            #     cfg.prune_rate = sum_pr / count
-            #     writer.add_scalar("pr/average", cfg.prune_rate, epoch)
 
             writer.add_scalar("test/lr", cur_lr, epoch)
             end_epoch = time.time()
-
-    if cfg.epochs == 0: ## This flag indicates a random hypothesis evaluation
-        modifier(cfg, 0, model)
-        last_val_acc1, last_val_acc5 = validate(dataset.val_loader, model, criterion, cfg, writer, 0)
-
-        # remember best acc@1 and save checkpoint
-        best_val_acc1 =last_val_acc1
-        best_val_acc5 = last_val_acc5
-        best_train_acc1 = 0
-        best_train_acc5 = 0
 
 
     if cfg.eval_tst:
