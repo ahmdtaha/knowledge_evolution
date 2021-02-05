@@ -14,8 +14,6 @@ import torch.backends.cudnn as cudnn
 
 
 def get_model(args):
-    if args.first_layer_dense:
-        args.first_layer_type = "DenseConv"
 
     args.logger.info("=> Creating model '{}'".format(args.arch))
     model = models.__dict__[args.arch](args)

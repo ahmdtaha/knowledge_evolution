@@ -129,12 +129,8 @@ class ResNet(nn.Module):
         if self.base_width // 64 > 1:
             print(f"==> Using {self.base_width // 64}x wide model")
 
-        if cfg.first_layer_dense:
-            self.conv1 = nn.Conv2d(
-                3, math.ceil(self.inplanes*slimming_factor), kernel_size=7, stride=2, padding=3, bias=False
-            )
-        else:
-            self.conv1 = builder.conv7x7(3, math.ceil(64*slimming_factor), stride=2, first_layer=True)
+
+        self.conv1 = builder.conv7x7(3, math.ceil(64*slimming_factor), stride=2, first_layer=True)
 
         self.bn1 = builder.batchnorm(math.ceil(64*slimming_factor))
         self.relu = builder.activation()

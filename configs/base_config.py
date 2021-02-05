@@ -231,9 +231,6 @@ class Config:
         parser.add_argument("--reset_hypothesis", action="store_true", default=False, help="Reset hypothesis across generations")
 
         parser.add_argument(
-            "--first_layer_dense", action="store_true", help="First layer dense or conv"
-        )
-        parser.add_argument(
             "--label_smoothing",
             type=float,
             help="Label smoothing to use, default 0.0",
