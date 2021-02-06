@@ -80,6 +80,28 @@ class SplitLinear(nn.Linear):
     # def reset_bias_scores(self):
     #     pass
 
+
+    def extract_slim(self,dst_m,src_name,dst_name):
+        c_out, c_in = self.weight.size()
+        d_out, d_in = dst_m.weight.size()
+
+        if self.in_channels_order is None:
+            assert dst_m.weight.shape == self.weight[:d_out, :d_in].shape
+            dst_m.weight.data = self.weight.data[:d_out, :d_in]
+            assert dst_m.bias.data.shape == self.bias.data[:d_out].shape
+            dst_m.bias.data = self.bias.data[:d_out]
+        else:
+            dst_m.weight.data = self.weight[:d_out, self.mask[0, :] == 1]
+            dst_m.bias.data = self.bias.data[:d_out]
+
+    def split_reinitialize(self, cfg):
+        if cfg.evolve_mode == 'rand':
+            rand_tensor = torch.zeros_like(self.weight).cuda()
+            nn.init.kaiming_uniform_(rand_tensor, a=math.sqrt(5))
+            self.weight.data = torch.where(self.mask.type(torch.bool), self.weight.data, rand_tensor)
+        else:
+            raise NotImplemented('Invalid KE mode {}'.format(cfg.evolve_mode))
+
     def forward(self, x):
         ## Debugging purpose
         # if self.split_rate < 1:

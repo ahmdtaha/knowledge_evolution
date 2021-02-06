@@ -26,3 +26,19 @@ class SplitBatchNorm(nn.BatchNorm2d):
                 start_ch += int(conv)
 
             self.bn_mask = nn.Parameter(torch.Tensor(mask), requires_grad=False)
+
+    def extract_slim(self,dst_m):
+        c_out = self.weight.size()[0]
+        d_out = dst_m.weight.size()[0]
+        if self.in_channels_order is None:
+            assert dst_m.weight.shape == self.weight[:d_out].shape
+            dst_m.weight.data = self.weight[:d_out]
+            dst_m.bias.data = self.bias[:d_out]
+            dst_m.running_mean.data = self.running_mean[:d_out]
+            dst_m.running_var.data = self.running_var[:d_out]
+        else:
+            assert dst_m.weight.shape == self.weight[self.bn_mask == 1].shape
+            dst_m.weight.data = self.weight[self.bn_mask == 1]
+            dst_m.bias.data = self.bias.data[self.bn_mask == 1]
+            dst_m.running_mean.data = self.running_mean[self.bn_mask == 1]
+            dst_m.running_var.data = self.running_var[self.bn_mask == 1]

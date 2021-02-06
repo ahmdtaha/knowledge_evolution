@@ -51,6 +51,23 @@ class SplitConv(nn.Conv2d):
 
         self.mask = nn.Parameter(torch.Tensor(mask), requires_grad=False)
 
+    def extract_slim(self,dst_m,src_name,dst_name):
+        c_out, c_in, _, _, = self.weight.size()
+        d_out, d_in, _, _ = dst_m.weight.size()
+        if self.in_channels_order is None:
+            if c_in == 3:
+                selected_convs = self.weight[:d_out]
+                # is_first_conv = False
+            else:
+                selected_convs = self.weight[:d_out][:, :d_in, :, :]
+
+            assert selected_convs.shape == dst_m.weight.shape
+            dst_m.weight.data = selected_convs
+        else:
+            selected_convs = self.weight[:d_out, self.mask[0, :, 0, 0] == 1, :, :]
+            assert selected_convs.shape == dst_m.weight.shape, '{} {} {} {}'.format(dst_name, src_name, dst_m.weight.shape,
+                                                                                    selected_convs.shape)
+            dst_m.weight.data = selected_convs
 
     # def reset_scores(self):
     #     if self.split_mode == 'wels':
@@ -83,6 +100,25 @@ class SplitConv(nn.Conv2d):
     #         self.bias_split_rate = bias_split_rate
     #     else:
     #         self.bias_split_rate = 1.0
+
+    def split_reinitialize(self,cfg):
+        if cfg.evolve_mode == 'rand':
+            rand_tensor = torch.zeros_like(self.weight).cuda()
+            nn.init.kaiming_uniform_(rand_tensor, a=math.sqrt(5))
+            self.weight.data = torch.where(self.mask.type(torch.bool), self.weight.data, rand_tensor)
+        else:
+            raise NotImplemented('Invalid KE mode {}'.format(cfg.evolve_mode))
+
+        if hasattr(self, "bias") and self.bias is not None and self.bias_split_rate < 1.0:
+            bias_mask = self.mask[:, 0, 0, 0]  ## Same conv mask is used for bias terms
+            if cfg.evolve_mode == 'rand':
+                rand_tensor = torch.zeros_like(self.bias)
+                fan_in, _ = nn.init._calculate_fan_in_and_fan_out(m.weight)
+                bound = 1 / math.sqrt(fan_in)
+                nn.init.uniform_(rand_tensor, -bound, bound)
+                self.bias.data = torch.where(bias_mask.type(torch.bool), self.bias.data, rand_tensor)
+            else:
+                raise NotImplemented('Invalid KE mode {}'.format(cfg.evolve_mode))
 
     def forward(self, x):
         ## Debugging reasons only

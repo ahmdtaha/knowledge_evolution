@@ -71,49 +71,22 @@ def split_reinitialize(cfg,model,reset_hypothesis=False):
         cfg.logger.info('WARNING: ZERO RESET is not optimal')
     for n, m in model.named_modules():
         if hasattr(m, "weight") and m.weight is not None:
-            if hasattr(m, "mask"):
-                # print(m.prune_rate)
+            if hasattr(m, "mask"): ## Conv and Linear but not BN
                 assert m.split_rate < 1.0
 
                 if reset_hypothesis and (m.__class__ == conv_type.SplitConv or  m.__class__ == linear_type.SplitLinear):
                     before_sum = torch.sum(m.mask)
-                    # cfg.logger.info('reset_hypothesis : True {}'.format())
                     m.reset_mask()
                     cfg.logger.info('reset_hypothesis : True {} : {} -> {}'.format(n,before_sum,torch.sum(m.mask)))
                 else:
                     cfg.logger.info('reset_hypothesis : False {} : {}'.format(n, torch.sum(m.mask)))
-                layer_mask = m.mask
-                if m.__class__ == conv_type.SplitConv:
-                    if cfg.evolve_mode == 'rand':
-                        rand_tensor = torch.zeros_like(m.weight).cuda()
-                        nn.init.kaiming_uniform_(rand_tensor, a=math.sqrt(5))
-                        m.weight.data = torch.where(layer_mask.type(torch.bool), m.weight.data, rand_tensor)
-                    else:
-                        raise NotImplemented('Invalid KE mode {}'.format(cfg.evolve_mode))
 
-                elif m.__class__ == linear_type.SplitLinear:
-                    if cfg.evolve_mode == 'rand':
-                        rand_tensor = torch.zeros_like(m.weight).cuda()
-                        nn.init.kaiming_uniform_(rand_tensor, a=math.sqrt(5))
-                        m.weight.data = torch.where(layer_mask.type(torch.bool), m.weight.data, rand_tensor)
-                    else:
-                        raise NotImplemented('Invalid KE mode {}'.format(cfg.evolve_mode))
+                if m.__class__ == conv_type.SplitConv or m.__class__ == linear_type.SplitLinear:
+                    m.split_reinitialize(cfg)
                 else:
                     raise NotImplemented('Invalid layer {}'.format(m.__class__))
 
-                if hasattr(m, "bias") and m.bias is not None and m.bias_split_rate < 1.0:
-                    cfg.logger.info('Cashing on the bias term as well')
-                    if m.__class__ == conv_type.SplitConv:
-                        bias_mask = layer_mask[:,0,0,0] ## Same conv mask is used for bias terms
-                        if cfg.evolve_mode == 'rand':
-                            rand_tensor = torch.zeros_like(m.bias)
-                            fan_in, _ = nn.init._calculate_fan_in_and_fan_out(m.weight)
-                            bound = 1 / math.sqrt(fan_in)
-                            nn.init.uniform_(rand_tensor, -bound, bound)
 
-                            m.bias.data = torch.where(bias_mask.type(torch.bool), m.bias.data, rand_tensor)
-                        else:
-                            raise NotImplemented('Invalid KE mode {}'.format(cfg.evolve_mode))
 
 
 class LabelSmoothing(nn.Module):
@@ -179,9 +152,7 @@ def load_pretrained(pretrained_path,gpus, model,cfg):
     else:
         cfg.logger.info("=> no pretrained weights found at '{}'".format(pretrained_path))
 
-    # for n, m in model.named_modules():
-    #     if isinstance(m, FixedSubnetConv):
-    #         m.set_subnet()
+
 
 class SubnetL1RegLoss(nn.Module):
     def __init__(self):

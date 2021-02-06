@@ -44,7 +44,7 @@ I want to give credit to [Vivek Ramanujan and Mitchell Wortsman's repos](https:/
 ### MISC Notes
 * This repository delivers a knowledge evolution implementation in a _**minimal**_ form. Accordingly, I disabled CS_KD baseline because it requires a specific sampling implementation. 
 * Our implementation might looks complex because it supports concatenation layers in DenseNet and GoogLeNet. For those interested in ResNets only, please use algorithm #1 presented in the paper.
-
+* This repository is a clean version of my original implementation. This repos focuses on the core idea and misses any research exploration snippets. If a function is missing, please let me know.
 
 
 ## Release History

@@ -177,7 +177,7 @@ def main(arg_num_threads=16):
     print('Starting with {} threads'.format(arg_num_threads))
     # arg_dataset = 'CUB200'  # Flower102, CUB200,HAM,Dog120,MIT67,Aircraft100,MINI_MIT67,FCAM
     for arg_dataset in ['Flower102Pytorch']:
-        arg_epochs = str(200)
+        arg_epochs = str(100)
         arg_evolve_mode = 'rand'
         arg_reset_hypothesis = False
         arg_enable_cs_kd = False
@@ -185,11 +185,10 @@ def main(arg_num_threads=16):
         arg_arch = 'Split_ResNet18'  # Split_ResNet18,Split_ResNet34,Split_ResNet50,split_googlenet,split_densenet169,split_vgg11_bn,split_densenet121
         arg_split_top = '0.5'
         arg_bias_split_top = arg_split_top
-        arg_num_generations = '10'
+        arg_num_generations = '5'
         arg_split_mode = 'kels' # wels , kels
 
         exp_name_suffix = 'single_gpu_test2'
-        # exp_name_suffix = 'redo_debug'
         arg_exp_name = 'SPLT_CLS_{}_{}_cskd{}_smth{}_k{}_G{}_e{}_ev{}_hReset{}_sm{}_{}/'.format(arg_dataset, arg_arch,
                                                                                            arg_enable_cs_kd,arg_enable_label_smoothing,
                                                                                            arg_split_top,arg_num_generations,
@@ -201,7 +200,6 @@ def main(arg_num_threads=16):
         else:
             arg_weight_decay = '1e-4'
             arg_init = 'kaiming_normal'
-        # arg_exp_name = 'CUB200_ResNet18_cskdFalse_smthTrue_cache_enabled_cosine_lr/'
 
         argv = [
             '--name', arg_exp_name,
