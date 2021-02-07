@@ -1,5 +1,5 @@
 # knowledge_evolution
-PyTorch implementation of the Knowledge Evolution training approach and Split-Nets
+The official PyTorch implementation of Knowledge Evolution in Neural Networks.
 
 ### TL;DR
 We subclass neural layers and define the mask inside the subclass. When creating a new network, we simply use our SplitConv and SplitLinear instead of the standard nn.Conv2d and nn.Linear.
@@ -15,6 +15,15 @@ We subclass neural layers and define the mask inside the subclass. When creating
 
 ## Usage example
 
+## Usage example
+
+First update `constants.py` with your dataset dir and checkpoints dir
+
+To train a model `python train_KE_cls.py` 
+
+The default hyperparameters are already hard coded in the python script. However these hyperparameters can be overridden by providing at least one parameter when running the script (e.g., `python train_KE_cls.py --name exp_name`) 
+
+
 The Flower102Pytorch loader (`data>flower.py`) works directly with this [Flower102 dataset](https://drive.google.com/file/d/1ftEUxDIS_VOcx_OO70QDfZvHNDxXXgRY/view?usp=sharing). This is the original flower102, but with an extra `list` directory that contains csv files for trn, val and tst splits. Feel free to download the flower dataset from [oxford website](https://www.robots.ox.ac.uk/~vgg/data/flowers/102/), just update `data>flower.py` accordingly. 
 
 The following table shows knowledge evolution in both the dense (even rows) and slim (odd rows) using Flower102 on ResNet18.
@@ -23,10 +32,8 @@ As the number of generation increases, both the dense and slim networks' perform
 ![Our implementation performance](./imgs/dense_slim.jpg)  
 
 ### TODO LIST
-* Disable CS_KD
 * Document the important flags
-* Add sample results to README file
-* Add GoogleNet support
+* Add TL;DR
 
 Contributor list
 ----------------

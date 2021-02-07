@@ -6,7 +6,7 @@ import models
 import pathlib
 import numpy as np
 import torch.nn as nn
-from scipy import ndimage
+from layers import bn_type
 from layers import conv_type
 from layers import linear_type
 import torch.backends.cudnn as cudnn
@@ -61,6 +61,16 @@ def save_checkpoint(state, is_best, filename="checkpoint.pth", save=False):
 def get_lr(optimizer):
     return optimizer.param_groups[0]["lr"]
 
+
+def extract_slim(split_model,model):
+    for (dst_n, dst_m), (src_n, src_m) in zip(split_model.named_modules(), model.named_modules()):
+        if hasattr(src_m, "weight") and src_m.weight is not None:
+            if hasattr(src_m, "mask"):
+                src_m.extract_slim(dst_m,src_n,dst_n)
+                # if src_m.__class__ == conv_type.SplitConv:
+                # elif src_m.__class__ == linear_type.SplitLinear:
+            elif src_m.__class__ == bn_type.SplitBatchNorm: ## BatchNorm has bn_maks not mask
+                src_m.extract_slim(dst_m)
 
 
 
@@ -153,17 +163,5 @@ def load_pretrained(pretrained_path,gpus, model,cfg):
         cfg.logger.info("=> no pretrained weights found at '{}'".format(pretrained_path))
 
 
-
-class SubnetL1RegLoss(nn.Module):
-    def __init__(self):
-        super().__init__()
-
-    def forward(self, model, temperature=1.0):
-        l1_accum = 0.0
-        for n, p in model.named_parameters():
-            if n.endswith("mask"):
-                l1_accum += (p*temperature).sigmoid().sum()
-
-        return l1_accum
 
 

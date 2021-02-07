@@ -5,7 +5,6 @@ import torch
 import getpass
 import KE_model
 import importlib
-import slim_network
 import os.path as osp
 import torch.nn as nn
 from utils import os_utils
@@ -88,7 +87,7 @@ def eval_slim(cfg, generation):
         cfg.logger.info("Split #Ops: %f GOps" % (total_ops / 1e9))
         cfg.logger.info("Split #Parameters: %f M" % (total_params / 1e6))
 
-        slim_network.extract_slim(split_model, model)
+        net_utils.extract_slim(split_model, model)
         dataset = getattr(data, cfg.set)(cfg)
         train, validate = get_trainer(cfg)
         last_val_acc1, last_val_acc5 = validate(dataset.tst_loader, split_model, softmax_criterion, cfg, writer, epoch)
@@ -177,7 +176,7 @@ def main(arg_num_threads=16):
     print('Starting with {} threads'.format(arg_num_threads))
     # arg_dataset = 'CUB200'  # Flower102, CUB200,HAM,Dog120,MIT67,Aircraft100,MINI_MIT67,FCAM
     for arg_dataset in ['Flower102Pytorch']:
-        arg_epochs = str(100)
+        arg_epochs = str(200)
         arg_evolve_mode = 'rand'
         arg_reset_hypothesis = False
         arg_enable_cs_kd = False
