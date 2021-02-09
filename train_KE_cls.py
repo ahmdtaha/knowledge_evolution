@@ -77,7 +77,7 @@ def eval_slim(cfg, generation):
     original_bias_split_rate = cfg.bias_split_rate
 
     if cfg.split_mode == 'kels':
-        cfg.slimming_factor = cfg.split_rate
+        cfg.slim_factor = cfg.split_rate
         cfg.split_rate = 1.0
         cfg.bias_split_rate = 1.0
         split_model = net_utils.get_model(cfg)
@@ -122,7 +122,7 @@ def eval_slim(cfg, generation):
 
     cfg.epochs = original_num_epos
 
-    cfg.slimming_factor = 1
+    cfg.slim_factor = 1
     cfg.split_rate = original_split_rate
     cfg.bias_split_rate = original_bias_split_rate
 

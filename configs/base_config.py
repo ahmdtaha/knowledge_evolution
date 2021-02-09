@@ -192,7 +192,7 @@ class Config:
         )
 
         parser.add_argument(
-            "--slimming_factor",
+            "--slim_factor",
             default=1.0,
             help="This variable is used to extract a slim network from a dense network. "
                  "It is initialized using the split_rate of the trained dense network.",

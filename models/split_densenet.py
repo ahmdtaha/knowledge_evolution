@@ -166,15 +166,14 @@ class DenseNet(nn.Module):
                  num_init_features=64, bn_size=4, drop_rate=0, num_classes=1000, memory_efficient=False):
 
         super(DenseNet, self).__init__()
-        slimming_factor = cfg.slimming_factor
-        # assert slimming_factor == 1, 'ResNet does not support slimming because of the residual links'
-        if slimming_factor < 1:
+        slim_factor = cfg.slim_factor
+        if slim_factor < 1:
             cfg.logger.info('WARNING: You are using a slim network')
 
-        # num_init_features = math.ceil(num_init_features * slimming_factor)
-        # growth_rate = math.ceil(growth_rate * slimming_factor)
+        # num_init_features = math.ceil(num_init_features * slim_factor)
+        # growth_rate = math.ceil(growth_rate * slim_factor)
 
-        slim = lambda x: math.ceil(x * slimming_factor)
+        slim = lambda x: math.ceil(x * slim_factor)
 
         self.features = nn.Sequential(OrderedDict([
             ('conv0', builder.conv7x7(3, slim(num_init_features), stride=2)),

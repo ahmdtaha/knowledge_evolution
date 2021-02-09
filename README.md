@@ -1,8 +1,10 @@
 # knowledge_evolution
-The official PyTorch implementation of Knowledge Evolution in Neural Networks.
+The official PyTorch implementation of **Knowledge Evolution in Neural Networks**.
 
 ### TL;DR
 We subclass neural layers and define the mask inside the subclass. When creating a new network, we simply use our SplitConv and SplitLinear instead of the standard nn.Conv2d and nn.Linear.
+
+* To extract a slim model, I create a dummy slim network with `slim_factor=split_rate`, then I call `utils.nets_utils.extract_slim` to copy the fit-hypothesis weights, from the dense network, into the slim network.
 
 ## Requirements
 
@@ -44,14 +46,14 @@ I want to give credit to [Vivek Ramanujan and Mitchell Wortsman's repos](https:/
 ### Further Contributions
 1. It would be great if someone re-implement this in Tensorflow. Let me know and I will add a link to your Tensorflow implementation here
 2. Pull requests to support more architectures (e.g., WideResNet, MobileNet, etc) are welcomed.
-3. I accepts tips to improve the code quality.
+3. I accept coding-tips to improve the code quality.
 4. To the contribution list, I will add the names/links of those who contribute to this repository.
 
 
 ### MISC Notes
 * This repository delivers a knowledge evolution implementation in a _**minimal**_ form. Accordingly, I disabled CS_KD baseline because it requires a specific sampling implementation. 
-* Our implementation might looks complex because it supports concatenation layers in DenseNet and GoogLeNet. For those interested in ResNets only, please use algorithm #1 presented in the paper.
-* This repository is a clean version of my original implementation. This repos focuses on the core idea and misses any research exploration snippets. If a function is missing, please let me know.
+* This implementation _looks_ complex because it supports concatenation layers in DenseNet and GoogLeNet. For those interested in ResNets only, please use algorithm #1 presented in the paper.
+* This repository is a "clean" version of my original implementation. This repos focuses on the core idea and omits any research exploration snippets. If a function is missing, please let me know.
 
 
 ## Release History

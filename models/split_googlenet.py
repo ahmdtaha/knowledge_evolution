@@ -81,9 +81,8 @@ class GoogLeNet(nn.Module):
         assert len(blocks) == 3
 
         builder = get_builder(cfg)
-        slimming_factor = cfg.slimming_factor
-        # assert slimming_factor == 1, 'ResNet does not support slimming because of the residual links'
-        if slimming_factor < 1:
+        slim_factor = cfg.slim_factor
+        if slim_factor < 1:
             cfg.logger.info('WARNING: You are using a slim network')
 
         conv_block = blocks[0]
@@ -93,7 +92,7 @@ class GoogLeNet(nn.Module):
         self.aux_logits = aux_logits
         self.transform_input = transform_input
 
-        slim = lambda x: math.ceil(x * slimming_factor)
+        slim = lambda x: math.ceil(x * slim_factor)
         self.conv1 = conv_block(builder,3, slim(64), kernel_size=7, stride=2) # , padding=3
         self.maxpool1 = nn.MaxPool2d(3, stride=2, ceil_mode=True)
         self.conv2 = conv_block(builder,slim(64), slim(64), kernel_size=1)
@@ -308,7 +307,7 @@ class Inception(nn.Module):
 
 class InceptionAux(nn.Module):
 
-    def __init__(self, builder,in_channels, num_classes,slimming_factor, conv_block=None):
+    def __init__(self, builder, in_channels, num_classes, slim_factor, conv_block=None):
         super(InceptionAux, self).__init__()
         if conv_block is None:
             conv_block = BasicConv2d
