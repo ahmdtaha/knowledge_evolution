@@ -89,7 +89,7 @@ def get_directories(args,generation):
     ckpt_base_dir = run_base_dir / "checkpoints"
 
     if not run_base_dir.exists():
-        os.makedirs(run_base_dir)
+        os.makedirs(run_base_dir,exist_ok=True)
 
     (run_base_dir / "settings.txt").write_text(str(args))
 

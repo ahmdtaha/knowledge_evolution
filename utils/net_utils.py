@@ -47,7 +47,7 @@ def save_checkpoint(state, is_best, filename="checkpoint.pth", save=False):
     filename = pathlib.Path(filename)
 
     if not filename.parent.exists():
-        os.makedirs(filename.parent)
+        os.makedirs(filename.parent,exist_ok=True)
 
     torch.save(state, filename)
 

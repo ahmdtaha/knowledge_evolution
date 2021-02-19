@@ -94,19 +94,19 @@ def hot_one_vector(y, max):
 
 def pkl_read(path):
     if(not os.path.exists(path)):
-        return None;
+        return None
 
     data = pickle.load(open(path, 'rb'))
-    return data;
+    return data
 
 def touch_dir(path):
     if(not os.path.exists(path)):
-        os.makedirs(path)
+        os.makedirs(path,exist_ok=True)
 
 def touch_file_dir(file_path):
     if not os.path.exists(os.path.dirname(file_path)):
         try:
-            os.makedirs(os.path.dirname(file_path))
+            os.makedirs(os.path.dirname(file_path),exist_ok=True)
         except OSError as exc:  # Guard against race condition
             if exc.errno != errno.EEXIST:
                 raise
