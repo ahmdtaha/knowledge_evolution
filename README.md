@@ -61,3 +61,4 @@ I want to give credit to [Vivek Ramanujan and Mitchell Wortsman's repos](https:/
     * First code commit on 10 Dec 2020
     * Submit/Test Split_googlenet code commit on 19 Dec 2020
     * Submit/Test Split_densenet code commit on 20 Dec 2020
+    * Repository made public on 1 Mar 2021
