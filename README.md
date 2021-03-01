@@ -17,8 +17,6 @@ We subclass neural layers and define the mask inside the subclass. When creating
 
 ## Usage example
 
-## Usage example
-
 First update `constants.py` with your dataset dir and checkpoints dir
 
 To train a model `python train_KE_cls.py` 
