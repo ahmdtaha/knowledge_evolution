@@ -12,7 +12,6 @@ from utils import net_utils
 from utils import csv_utils
 from layers import conv_type
 from utils import path_utils
-# from utils import push_utils
 from utils import model_profile
 from configs.base_config import Config
 
