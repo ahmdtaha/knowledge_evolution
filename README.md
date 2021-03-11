@@ -17,8 +17,6 @@ We subclass neural layers and define the mask inside the subclass. When creating
 
 ## Usage example
 
-## Usage example
-
 First update `constants.py` with your dataset dir and checkpoints dir
 
 To train a model `python train_KE_cls.py` 
@@ -61,3 +59,4 @@ I want to give credit to [Vivek Ramanujan and Mitchell Wortsman's repos](https:/
     * First code commit on 10 Dec 2020
     * Submit/Test Split_googlenet code commit on 19 Dec 2020
     * Submit/Test Split_densenet code commit on 20 Dec 2020
+    * Repository made public on 1 Mar 2021
