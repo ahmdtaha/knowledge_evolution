@@ -70,7 +70,7 @@ def eval_slim(cfg, generation):
     dummy_input_tensor = torch.zeros((1, 3, 224, 224)).cuda()
     total_ops, total_params = model_profile.profile(model, dummy_input_tensor)
     cfg.logger.info("Dense #Ops: %f GOps" % (total_ops / 1e9))
-    cfg.logger.info("Dense #Parameters: %f M" % (total_params / 1e6))
+    cfg.logger.info("Dense #Parameters: %f M (Split-Mask included)" % (total_params / 1e6))
 
     original_split_rate = cfg.split_rate
     original_bias_split_rate = cfg.bias_split_rate
@@ -84,7 +84,7 @@ def eval_slim(cfg, generation):
 
         total_ops, total_params = model_profile.profile(split_model, dummy_input_tensor)
         cfg.logger.info("Split #Ops: %f GOps" % (total_ops / 1e9))
-        cfg.logger.info("Split #Parameters: %f M" % (total_params / 1e6))
+        cfg.logger.info("Split #Parameters: %f M (Split-Mask included)" % (total_params / 1e6))
 
         net_utils.extract_slim(split_model, model)
         dataset = getattr(data, cfg.set)(cfg)
