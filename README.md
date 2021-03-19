@@ -1,5 +1,5 @@
 # knowledge_evolution
-The official PyTorch implementation of **Knowledge Evolution in Neural Networks**.
+The official PyTorch implementation of [Knowledge Evolution in Neural Networks](https://arxiv.org/abs/2103.05152).
 
 ### TL;DR
 We subclass neural layers and define the mask inside the subclass. When creating a new network, we simply use our [SplitConv](https://github.com/ahmdtaha/knowledge_evolution/blob/main/layers/conv_type.py) and [SplitLinear](https://github.com/ahmdtaha/knowledge_evolution/blob/main/layers/linear_type.py) instead of the standard nn.Conv2d and nn.Linear.
@@ -60,3 +60,14 @@ I want to give credit to [Vivek Ramanujan and Mitchell Wortsman's repos](https:/
     * Submit/Test Split_googlenet code commit on 19 Dec 2020
     * Submit/Test Split_densenet code commit on 20 Dec 2020
     * Repository made public on 1 Mar 2021
+
+
+### Citation
+```
+@inproceedings{taha2021knowledge,
+title={Knowledge Evolution in Neural Networks},
+author={Taha, Ahmed and Shrivastava, Abhinav and Davis, Larry},
+booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+year={2021}
+}
+```

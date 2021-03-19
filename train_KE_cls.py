@@ -186,7 +186,7 @@ def main(arg_num_threads=16):
         arg_num_generations = '5'
         arg_split_mode = 'kels' # wels , kels
 
-        exp_name_suffix = 'single_gpu_test2'
+        exp_name_suffix = 'single_gpu_test3'
         arg_exp_name = 'SPLT_CLS_{}_{}_cskd{}_smth{}_k{}_G{}_e{}_ev{}_hReset{}_sm{}_{}/'.format(arg_dataset, arg_arch,
                                                                                            arg_enable_cs_kd,arg_enable_label_smoothing,
                                                                                            arg_split_top,arg_num_generations,
