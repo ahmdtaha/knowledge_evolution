@@ -6,7 +6,6 @@ We subclass neural layers and define the mask inside the subclass. When creating
 
 * To extract a slim model, I create a dummy slim network with `slim_factor=split_rate` ([such as](https://github.com/ahmdtaha/knowledge_evolution/blob/b389041ff4dd308dd8e35ebb2b01e5863d7a6924/train_KE_cls.py#L80)), then I call `utils.nets_utils.extract_slim` ([such as](https://github.com/ahmdtaha/knowledge_evolution/blob/b389041ff4dd308dd8e35ebb2b01e5863d7a6924/train_KE_cls.py#L90)) to copy the fit-hypothesis weights, from the dense network, into the slim network.
 
-Knowledge Evolution in a Nutshell
 ![Knowledge Evolution GIF](./imgs/cvpr_2021.gif)
 
 ## Requirements
