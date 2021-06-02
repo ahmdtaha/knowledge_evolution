@@ -1,10 +1,13 @@
 # knowledge_evolution
-The official PyTorch implementation of [Knowledge Evolution in Neural Networks](https://arxiv.org/abs/2103.05152).
+The official PyTorch implementation of [Knowledge Evolution in Neural Networks](https://arxiv.org/abs/2103.05152) -- CVPR 2021 Oral.
 
 ### TL;DR
 We subclass neural layers and define the mask inside the subclass. When creating a new network, we simply use our [SplitConv](https://github.com/ahmdtaha/knowledge_evolution/blob/main/layers/conv_type.py) and [SplitLinear](https://github.com/ahmdtaha/knowledge_evolution/blob/main/layers/linear_type.py) instead of the standard nn.Conv2d and nn.Linear.
 
 * To extract a slim model, I create a dummy slim network with `slim_factor=split_rate` ([such as](https://github.com/ahmdtaha/knowledge_evolution/blob/b389041ff4dd308dd8e35ebb2b01e5863d7a6924/train_KE_cls.py#L80)), then I call `utils.nets_utils.extract_slim` ([such as](https://github.com/ahmdtaha/knowledge_evolution/blob/b389041ff4dd308dd8e35ebb2b01e5863d7a6924/train_KE_cls.py#L90)) to copy the fit-hypothesis weights, from the dense network, into the slim network.
+
+Knowledge Evolution in a Nutshell
+![Knowledge Evolution GIF](./imgs/cvpr_2021.gif)
 
 ## Requirements
 
