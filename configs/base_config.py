@@ -289,7 +289,7 @@ class Config:
         os_utils.touch_dir(self.cfg.exp_dir)
         log_file = os.path.join(self.cfg.exp_dir, self.cfg.log_file)
         logging.config.dictConfig(log_utils.get_logging_dict(log_file))
-        self.cfg.logger = logging.getLogger('train')
+        self.cfg.logger = logging.getLogger('KE')
 
         return self.cfg
 

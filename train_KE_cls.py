@@ -33,8 +33,6 @@ def train_dense(cfg, generation):
         model = net_utils.move_model_to_gpu(cfg, model)
 
     cfg.trainer = 'default_cls'
-    # cfg.split_rate = 1.0
-    # cfg.bias_split_rate = 1.0
     cfg.pretrained = None
     ckpt_path = KE_model.ke_cls_train(cfg, model,generation)
 
