@@ -62,6 +62,7 @@ I want to give credit to [Vivek Ramanujan and Mitchell Wortsman's repos](https:/
     * Submit/Test Split_googlenet code commit on 19 Dec 2020
     * Submit/Test Split_densenet code commit on 20 Dec 2020
     * Repository made public on 1 Mar 2021
+    * Add Aircarfts100 dataset loader 31 Jul 2021 -- the lists dir is available [here](https://drive.google.com/file/d/1lyaro579PRFAIyBZoPpLBjCzKdvsfEH2/view?usp=sharing)
 
 
 ### Citation
