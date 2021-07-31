@@ -84,7 +84,7 @@ class Builder(object):
                     padding=2,
                     bias=bias,
                     split_mode=self.cfg.split_mode,
-                    keep_rate=self.cfg.keep_rate,
+                    split_rate=self.cfg.split_rate,
                     in_channels_order=in_channels_order,
                 )
         elif kernel_size == 7:
@@ -128,7 +128,7 @@ class Builder(object):
                     padding=2,
                     bias=bias,
                     split_mode=self.cfg.split_mode,
-                    keep_rate=self.cfg.keep_rate,
+                    split_rate=self.cfg.split_rate,
                     in_channels_order=in_channels_order,
                 )
         else:
