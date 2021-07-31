@@ -4,7 +4,6 @@ import numpy as np
 import pandas as pd
 import os.path as osp
 from utils import path_utils
-from configs.base_config import Config
 from data.custom_dataset import CustomDataset
 
 

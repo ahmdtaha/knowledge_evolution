@@ -174,7 +174,7 @@ def start_KE(cfg):
 def main(arg_num_threads=16):
     print('Starting with {} threads'.format(arg_num_threads))
     # arg_dataset = 'CUB200'  # Flower102, CUB200,HAM,Dog120,MIT67,Aircraft100,MINI_MIT67,FCAM
-    for arg_dataset in ['Flower102Pytorch']:
+    for arg_dataset in ['Aircraft100Pytorch']:
         arg_epochs = str(200)
         arg_evolve_mode = 'rand'
         arg_reset_hypothesis = False

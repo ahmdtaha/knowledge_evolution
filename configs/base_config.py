@@ -21,8 +21,9 @@ class Config:
         )
 
         parser.add_argument("--optimizer", help="Which optimizer to use", default="sgd")
-        parser.add_argument("--set", help="only Flower102Pytorch is currently supported", type=str, default="Flower102Pytorch",
-                            choices=['Flower102Pytorch'])
+        parser.add_argument("--set", help="only Flower102Pytorch is currently supported",
+                            type=str, default="Flower102Pytorch",
+                            choices=['Flower102Pytorch','Aircraft100Pytorch'])
 
         parser.add_argument(
             "-a", "--arch", metavar="ARCH", default="Split_ResNet18", help="model architecture",
@@ -275,7 +276,7 @@ class Config:
         elif self.cfg.set in ['MIT67']:
             self.cfg.num_cls = 67
             self.cfg.eval_tst = False
-        elif self.cfg.set == 'Aircraft100':
+        elif self.cfg.set == 'Aircraft100' or self.cfg.set == 'Aircraft100Pytorch':
             self.cfg.num_cls = 100
             self.cfg.eval_tst = True
         else:

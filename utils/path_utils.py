@@ -42,7 +42,7 @@ def get_datasets_dir(dataset_name):
         dataset_dir = 'stanford_dogs'
     elif dataset_name in ['MIT67','MINI_MIT67']:
         dataset_dir = 'mit67'
-    elif dataset_name == 'Aircraft100':
+    elif dataset_name == 'Aircraft100' or dataset_name == 'Aircraft100Pytorch':
         dataset_dir = 'aircrafts'
     elif dataset_name == 'ImageNet':
         dataset_dir = 'imagenet/ILSVRC/Data/CLS-LOC'
