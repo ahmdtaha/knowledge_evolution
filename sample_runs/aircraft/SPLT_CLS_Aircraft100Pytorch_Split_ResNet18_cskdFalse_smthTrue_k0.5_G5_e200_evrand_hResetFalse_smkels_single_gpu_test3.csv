@@ -1,0 +1,11 @@
+Date Finished, Name, Split Rate, Bias Split Rate, Current Val Top 1, Current Val Top 5, Best Val Top 1, Best Val Top 5, Current Tst Top 1, Current Tst Top 5, Best Tst Top 1, Best Tst Top 5, Best Trn Top 1, Best Trn Top 5
+07-31-21_15:12:03, SPLT_CLS_Aircraft100Pytorch_Split_ResNet18_cskdFalse_smthTrue_k0.5_G5_e200_evrand_hResetFalse_smkels_single_gpu_test3/, 0.5, 0.5, 56.23, 79.72, 56.65, 79.81, 56.95, 79.75, 0.00, 0.00, 94.93, 97.90
+07-31-21_15:12:16, SPLT_CLS_Aircraft100Pytorch_Split_ResNet18_cskdFalse_smthTrue_k0.5_G5_e200_evrand_hResetFalse_smkels_single_gpu_test3/, slim, slim, 0.00, 0.00, 0.00, 0.00, 1.08, 5.04, 0.00, 0.00, 0.00, 0.00
+07-31-21_16:18:12, SPLT_CLS_Aircraft100Pytorch_Split_ResNet18_cskdFalse_smthTrue_k0.5_G5_e200_evrand_hResetFalse_smkels_single_gpu_test3/, 0.5, 0.5, 58.00, 80.32, 58.06, 80.80, 57.37, 80.56, 0.00, 0.00, 95.11, 98.08
+07-31-21_16:18:25, SPLT_CLS_Aircraft100Pytorch_Split_ResNet18_cskdFalse_smthTrue_k0.5_G5_e200_evrand_hResetFalse_smkels_single_gpu_test3/, slim, slim, 0.00, 0.00, 0.00, 0.00, 12.27, 29.70, 0.00, 0.00, 0.00, 0.00
+07-31-21_17:21:53, SPLT_CLS_Aircraft100Pytorch_Split_ResNet18_cskdFalse_smthTrue_k0.5_G5_e200_evrand_hResetFalse_smkels_single_gpu_test3/, 0.5, 0.5, 57.37, 79.66, 57.37, 80.08, 57.85, 79.87, 0.00, 0.00, 94.78, 97.90
+07-31-21_17:22:05, SPLT_CLS_Aircraft100Pytorch_Split_ResNet18_cskdFalse_smthTrue_k0.5_G5_e200_evrand_hResetFalse_smkels_single_gpu_test3/, slim, slim, 0.00, 0.00, 0.00, 0.00, 46.20, 72.25, 0.00, 0.00, 0.00, 0.00
+07-31-21_18:25:55, SPLT_CLS_Aircraft100Pytorch_Split_ResNet18_cskdFalse_smthTrue_k0.5_G5_e200_evrand_hResetFalse_smkels_single_gpu_test3/, 0.5, 0.5, 57.61, 79.27, 57.61, 79.45, 57.70, 80.62, 0.00, 0.00, 95.47, 97.96
+07-31-21_18:26:07, SPLT_CLS_Aircraft100Pytorch_Split_ResNet18_cskdFalse_smthTrue_k0.5_G5_e200_evrand_hResetFalse_smkels_single_gpu_test3/, slim, slim, 0.00, 0.00, 0.00, 0.00, 56.14, 80.29, 0.00, 0.00, 0.00, 0.00
+07-31-21_19:29:54, SPLT_CLS_Aircraft100Pytorch_Split_ResNet18_cskdFalse_smthTrue_k0.5_G5_e200_evrand_hResetFalse_smkels_single_gpu_test3/, 0.5, 0.5, 57.40, 79.84, 57.70, 79.84, 57.91, 80.23, 0.00, 0.00, 94.96, 97.90
+07-31-21_19:30:08, SPLT_CLS_Aircraft100Pytorch_Split_ResNet18_cskdFalse_smthTrue_k0.5_G5_e200_evrand_hResetFalse_smkels_single_gpu_test3/, slim, slim, 0.00, 0.00, 0.00, 0.00, 58.18, 81.40, 0.00, 0.00, 0.00, 0.00
